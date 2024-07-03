@@ -1,11 +1,18 @@
-import "./App.css"
+ // src/App.jsx
+ 
 
 function App() {
-    return (
-        <>
-            
-        </>
-    )
+  
+
+  return (
+  <>
+    <h1>Costos y stock</h1>
+  </>
+  );
 }
 
-export default App
+export default App;
+
+
+ 
+
