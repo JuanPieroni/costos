@@ -1,35 +1,5 @@
-// esta es una app de costos y control de stock que va a ser desarrollada en React entrono VITE y con react router DOM ( javascript con ext .jsx)
-
-1.1 la pagina debera tener autenticacion con usuario y contraseña
-1.2 el usuario debera ingresar manualmente los productos y estos seran almacenados en una base de datos gratuita
-Las propiedades de los productos son : Categoria, nombre del producto, stock, fecha de vencimiento, fecha de compra, numero de lote. 
-el usuario debe experimentar una navegacion intuitiva . que posea varias vistas UI . no quiero que este todo en una sola pagina , ( usa react router dom ) 
-1.3 el usuario tendra acceso a modificar estos productos, agregar editar , o borrar una vez agregados. 
-
-calculadora de costos 
-2. luego en base a los productos intgresados el usuario va aquerer sacar el costo del producto , basandose en el precio por kilo , canitdad de gramos a usar en la receta 
-estas dos entradas deben ser manuales ( no deben ser propiedades fijas del producto)
-
-3. va a necesitar otro input para ingresar un costo fijo
-4. va a necesitar otro input para ingresar el porcentaje que desee de ganancia 
-
-5. usa nombres de variables cortos y lo mejor descriptivo posible
-resumen :
-1.pagina de inicio o bienvenida con login
-2.ingreso manual de productos. (el usuario tendra acceso a este cuando lo desee en el futuro)
-3.calculo de costo del producto + su porcentaje de ganancia y costo fijo
-por ahora eso. luego la iremos escalando 
-
- 
-src/
-  components/
-    Login.jsx
-    ProductForm.jsx
-    ProductList.jsx
-    CostCalculator.jsx
-  pages/
-    Home.jsx
-    Products.jsx
-    Calculator.jsx
-  App.jsx
-  main.jsx
+¿Cómo actualizar todas las dependencias npm?
+Para poder todas estas dependencias a su última versión, deberás instalar un paquete llamado npm-check-updates de forma global:
+npm install -g npm-check-updates. Una vez instalado deberás correr el siguiente comando:
+ncu -u. Esto modificará tu archivo package. ...
+npm install.

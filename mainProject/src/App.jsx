@@ -1,18 +1,21 @@
- // src/App.jsx
- 
+// src/App.jsx
+import React from "react"
+import { BrowserRouter as Router } from 'react-router-dom';
+import "./App.css"
+import "bootstrap/dist/css/bootstrap.min.css"
+import Navbar from "./components/NavBar/Navbar"
+import AppRoutes from "./routes/Routes"
 
 function App() {
-  
-
-  return (
-  <>
-    <h1>Costos y stock</h1>
-  </>
-  );
+    return (
+        <>
+            <Router>
+                <Navbar />
+                <AppRoutes/>
+            </Router>
+        </>
+    )
 }
 
-export default App;
 
-
- 
-
+export default App
