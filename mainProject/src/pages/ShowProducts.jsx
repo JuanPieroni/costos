@@ -15,13 +15,42 @@ const ShowProducts = () => {
             .catch((err) => console.log(err))
     }, [])
 
+    const editItem = (id, data) => {
+        console.log("editando producto")
+        //TODO aca va la logica (PUT)
+
+        axiosInstance
+            .put(`/${id}`, data)
+            .then((r) => {
+                if (r.status === 200) {
+                    axiosInstance
+                        .get("/")
+                        .then((r) => {
+                            if (r.status === 200) {
+                                setItems(r.data)
+                            } else {
+                                throw new Error(
+                                    `[ERROR ${r.status}] Error en la solicitud`
+                                )
+                            }
+                        })
+                        .catch((err) => console.log(err))
+                } else {
+                    throw new Error(`[ERROR ${r.status}] Error en la solicitud`)
+                }
+            })
+            .catch((err) => console.log(err))
+    }
     return (
         <div className="container">
-        
             <h1>Show Products</h1>
             <button>Cargar Productos</button>
             <div className="table">
-                {items.length > 0 ? <Table items={items} /> : <p>No hay productos</p>}
+                {items.length > 0 ? (
+                    <Table items={items} editItem={editItem} />
+                ) : (
+                    <p>No hay productos</p>
+                )}
             </div>
         </div>
     )
