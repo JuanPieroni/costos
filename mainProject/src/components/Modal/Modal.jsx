@@ -8,26 +8,23 @@ import FormBs from "react-bootstrap/Form"
 
 const Modal = (props) => {
     const formatDate = (date) => {
-        return date.toISOString().split("T")[0]
+        if (!date) return "";
+        const d = new Date(date);
+        return d.toISOString().split("T")[0];
     }
     const initialValues = {
-        name: props.item.name || "",
-        description: props.item.description || "",
+        category: props.item.category || "",
         stock: props.item.stock || "",
         price: props.item.price || "",
-        date: formatDate(new Date()) || "",
-        expireDate: formatDate(new Date()) || "",
+        name: props.item.name || "",
+        date: formatDate(props.item.date) || formatDate(new Date()),
+        expireDate: formatDate(props.item.expireDate) || formatDate(new Date()),
         lote: props.item.lote || "",
     }
     const formSchema = Yup.object().shape({
-        name: Yup.string()
-            .min(4, "nombre demasiado corto")
-            .max(20, "nombre demasiado largo")
-            .required("Este campo es obligatorio"),
-        description: Yup.string()
-            .min(10, "descripcion demasiado corta")
-            .max(100, "descripcion demasiado larga")
-            .required("Este campo es obligatorio"),
+        name: Yup.string(),
+
+        category: Yup.string(),
         stock: Yup.number().required("Este campo es obligatorio"),
         price: Yup.number().required("Este campo es obligatorio"),
         date: Yup.date().required("Este campo es obligatorio"),
@@ -39,7 +36,7 @@ const Modal = (props) => {
             <ModalBs
                 {...props}
                 size="lg"
-                aria-labelledby="contained-modal-title-vcenter"
+                aria-labelledby="contained-modal-title-center"
                 centered
             >
                 <ModalBs.Header closeButton className="bg-dark">
@@ -67,6 +64,24 @@ const Modal = (props) => {
                         }) => (
                             <Form>
                                 <FormBs.Group className="mb-3">
+                                    <label htmlFor="category">
+                                       Categoria
+                                    </label>
+                                    <Field
+                                        onChange={handleChange}
+                                        className="form-control field-input"
+                                        id="category"
+                                        type="text"
+                                        name="category"
+                                    />
+                                    {errors.category && touched.category && (
+                                        <ErrorMessage
+                                            name="category"
+                                            component="div"
+                                        />
+                                    )}
+                                </FormBs.Group>
+                                <FormBs.Group className="mb-3">
                                     <label htmlFor="name">
                                         Nombre del producto
                                     </label>
@@ -85,23 +100,20 @@ const Modal = (props) => {
                                     )}
                                 </FormBs.Group>
                                 <FormBs.Group className="mb-3">
-                                    <label htmlFor="description">
-                                        Descripcion del producto
-                                    </label>
+                                    <label htmlFor="price">Precio</label>
                                     <Field
                                         onChange={handleChange}
                                         className="form-control field-input"
-                                        id="description"
-                                        type="text"
-                                        name="description"
+                                        id="price"
+                                        type="number"
+                                        name="price"
                                     />
-                                    {errors.description &&
-                                        touched.description && (
-                                            <ErrorMessage
-                                                name="description"
-                                                component="div"
-                                            />
-                                        )}
+                                    {errors.price && touched.price && (
+                                        <ErrorMessage
+                                            name="price"
+                                            component="div"
+                                        />
+                                    )}
                                 </FormBs.Group>
                                 <FormBs.Group className="mb-3">
                                     {/* SACAR LAS FLECHITAS DE LOS LABELS (y chequear que reciba la info) */}
@@ -121,17 +133,17 @@ const Modal = (props) => {
                                     )}
                                 </FormBs.Group>
                                 <FormBs.Group className="mb-3">
-                                    <label htmlFor="price">Precio</label>
+                                    <label htmlFor="lote">Numero de Lote</label>
                                     <Field
                                         onChange={handleChange}
                                         className="form-control field-input"
-                                        id="price"
-                                        type="number"
-                                        name="price"
+                                        id="lote"
+                                        type="text"
+                                        name="lote"
                                     />
-                                    {errors.price && touched.price && (
+                                    {errors.lote && touched.lote && (
                                         <ErrorMessage
-                                            name="price"
+                                            name="lote"
                                             component="div"
                                         />
                                     )}
@@ -174,28 +186,12 @@ const Modal = (props) => {
                                         )}
                                 </FormBs.Group>
 
-                                <FormBs.Group className="mb-3">
-                                    <label htmlFor="lote">Numero de Lote</label>
-                                    <Field
-                                        onChange={handleChange}
-                                        className="form-control field-input"
-                                        id="lote"
-                                        type="text"
-                                        name="lote"
-                                    />
-                                    {errors.lote && touched.lote && (
-                                        <ErrorMessage
-                                            name="lote"
-                                            component="div"
-                                        />
-                                    )}
-                                </FormBs.Group>
 
                                 <Button
                                     className="btn btn-primary"
                                     type="submit"
                                 >
-                                    Cargar nuevo producto
+                                    Editar producto
                                 </Button>
                                 {isSubmitting ? (
                                     <p>Enviando nuevo Producto </p>

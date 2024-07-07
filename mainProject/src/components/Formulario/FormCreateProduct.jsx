@@ -11,7 +11,7 @@ const FormCreateProduct = () => {
     }
     const initialValues = {
         name: "",
-        description: "",
+        category: "",
         stock: "",
         price: "",
         lote: "",
@@ -19,14 +19,8 @@ const FormCreateProduct = () => {
         expireDate: formatDate(new Date()),
     }
     const formSchema = Yup.object().shape({
-        name: Yup.string()
-            .min(4, "nombre demasiado corto")
-            .max(20, "nombre demasiado largo")
-            .required("Este campo es obligatorio"),
-        description: Yup.string()
-            .min(10, "descripcion demasiado corta")
-            .max(100, "descripcion demasiado larga")
-            .required("Este campo es obligatorio"),
+        name: Yup.string(),
+        category: Yup.string(),
         stock: Yup.number().required("Este campo es obligatorio"),
         price: Yup.number().required("Este campo es obligatorio"),
         date: Yup.date().required("Este campo es obligatorio"),
@@ -40,14 +34,16 @@ const FormCreateProduct = () => {
                 <Formik
                     initialValues={initialValues}
                     validationSchema={formSchema}
-                    onSubmit={(values, { setSubmitting }) => {
+                    onSubmit={(values, { setSubmitting, resetForm }) => {
                         console.log(values)
                         axiosInstance
                             .post("/", values)
                             .then((response) => {
                                 if (response.status === 201) {
                                     console.log(response)
-                                   setSubmitting(false)
+                                    setSubmitting(false)
+                                    resetForm()
+                                    alert("Producto subido al servidor")
                                 } else {
                                     throw new Error(
                                         `[${r.status}]Hubo un error`
@@ -76,18 +72,16 @@ const FormCreateProduct = () => {
                                 )}
                             </FormBs.Group>
                             <FormBs.Group className="mb-3">
-                                <label htmlFor="description">
-                                    Descripcion del producto
-                                </label>
+                                <label htmlFor="category">Categoria</label>
                                 <Field
                                     className="form-control field-input"
-                                    id="description"
+                                    id="category"
                                     type="text"
-                                    name="description"
+                                    name="category"
                                 />
-                                {errors.description && touched.description && (
+                                {errors.category && touched.category && (
                                     <ErrorMessage
-                                        name="description"
+                                        name="category"
                                         component="div"
                                     />
                                 )}
@@ -166,7 +160,7 @@ const FormCreateProduct = () => {
                                 )}
                             </FormBs.Group>
 
-                            <Button className="btn btn-primary" type="submit">
+                            <Button className="btn btn-primary" type="submit" disabled={isSubmitting}>
                                 Cargar nuevo producto
                             </Button>
                             {isSubmitting ? (

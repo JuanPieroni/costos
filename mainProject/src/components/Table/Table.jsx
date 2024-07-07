@@ -8,10 +8,14 @@ const Table = ({ items, editItem }) => {
             <TableBs striped bordered hover variant="dark">
                 <thead>
                     <tr>
-                        <th>#ID</th>
+                        <th>ID</th>
+                        <th>Categoria</th>
                         <th>Producto</th>
-                        <th>Precio</th>
+                        <th>Precio(kg)</th>
                         <th>Stock</th>
+                     <th>Nro de lote</th>
+                        <th>Fecha de compra</th>
+                        <th>Vencimiento</th>
                         <th className=" text-center">Modificar</th>
                     </tr>
                 </thead>

@@ -43,8 +43,8 @@ const ShowProducts = () => {
     }
     return (
         <div className="container">
-            <h1>Show Products</h1>
-            <button>Cargar Productos</button>
+            <h1 className="  mb-10 p-5">Stock de Productos</h1>
+          
             <div className="table">
                 {items.length > 0 ? (
                     <Table items={items} editItem={editItem} />
