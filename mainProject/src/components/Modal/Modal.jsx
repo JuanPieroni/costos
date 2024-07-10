@@ -3,14 +3,19 @@ import Button from "react-bootstrap/Button"
 import ModalBs from "react-bootstrap/Modal"
 import { Formik, Form, Field, ErrorMessage } from "formik"
 import * as Yup from "yup"
+import { ItemsContext } from "../../context/itemsContext"
 
 import FormBs from "react-bootstrap/Form"
+import { useContext } from "react"
+import { axiosInstance } from "../../services/axios.config"
 
 const Modal = (props) => {
+    const { items, dispatch } = useContext(ItemsContext)
+
     const formatDate = (date) => {
-        if (!date) return "";
-        const d = new Date(date);
-        return d.toISOString().split("T")[0];
+        if (!date) return ""
+        const d = new Date(date)
+        return d.toISOString().split("T")[0]
     }
     const initialValues = {
         category: props.item.category || "",
@@ -50,8 +55,21 @@ const Modal = (props) => {
                         validationSchema={formSchema}
                         onSubmit={async (values, { setSubmitting }) => {
                             console.log(values)
-                            await props.onSubmit(props.item.id, values)
-                            setSubmitting(false)
+                            // await props.onSubmit(props.item.id, values)
+                            axiosInstance
+                                .put(`/${props.item.id}`, values)
+                                .then((r) => {
+                                    const itemsUpload = items.map((item) => {
+                                        if (item.id === r.data.id) return r.data
+                                        return item
+                                    })
+                                    dispatch({
+                                        type: "UPLOAD_ITEMS",
+                                        payload: itemsUpload,
+                                    })
+                                    setSubmitting(false)
+                                })
+                                .catch((err) => console.log(err))
                             props.onHide()
                         }}
                     >
@@ -64,9 +82,7 @@ const Modal = (props) => {
                         }) => (
                             <Form>
                                 <FormBs.Group className="mb-3">
-                                    <label htmlFor="category">
-                                       Categoria
-                                    </label>
+                                    <label htmlFor="category">Categoria</label>
                                     <Field
                                         onChange={handleChange}
                                         className="form-control field-input"
@@ -185,7 +201,6 @@ const Modal = (props) => {
                                             />
                                         )}
                                 </FormBs.Group>
-
 
                                 <Button
                                     className="btn btn-primary"
